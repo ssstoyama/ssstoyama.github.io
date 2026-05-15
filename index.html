@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Homepage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Syne', 'sans-serif'],
+            body: ['Noto Sans JP', 'sans-serif'],
+          },
+          colors: {
+            ink: '#0e0e0e',
+            paper: '#f5f2eb',
+            accent: '#c8502a',
+            muted: '#7a7568',
+          },
+          animation: {
+            'fade-up': 'fadeUp 0.7s ease forwards',
+            'line-expand': 'lineExpand 1s ease forwards',
+          },
+          keyframes: {
+            fadeUp: {
+              '0%': { opacity: '0', transform: 'translateY(24px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            lineExpand: {
+              '0%': { width: '0%' },
+              '100%': { width: '100%' },
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background-color: #f5f2eb;
+      color: #0e0e0e;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.35;
+    }
+
+    .section-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: #c8502a;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .service-card {
+      border: 1px solid rgba(14,14,14,0.15);
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: #c8502a;
+      background: rgba(200, 80, 42, 0.04);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 3rem;
+      animation: marquee 18s linear infinite;
+      white-space: nowrap;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    a.nav-link {
+      position: relative;
+    }
+    a.nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: #c8502a;
+      transition: width 0.3s;
+    }
+    a.nav-link:hover::after { width: 100%; }
+
+    .hero-title-line {
+      overflow: hidden;
+    }
+    .hero-title-line span {
+      display: block;
+      animation: fadeUp 0.8s ease forwards;
+      opacity: 0;
+    }
+    .hero-title-line:nth-child(1) span { animation-delay: 0.1s; }
+    .hero-title-line:nth-child(2) span { animation-delay: 0.25s; }
+    .hero-title-line:nth-child(3) span { animation-delay: 0.4s; }
+
+
+  </style>
+</head>
+<body class="overflow-x-hidden">
+
+  <!-- ========== NAV ========== -->
+  <nav class="fixed top-0 left-0 right-0 z-50 mix-blend-multiply">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+      <span class="font-display font-800 text-lg tracking-tight text-ink">Shoya Toyama</span>
+      <div class="hidden md:flex gap-8 text-sm font-body text-muted">
+        <a href="#services" class="nav-link">Services</a>
+        <a href="#about" class="nav-link">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== HERO ========== -->
+  <section class="min-h-screen flex flex-col justify-end px-6 pb-20 pt-32 max-w-6xl mx-auto">
+    <div class="mb-8">
+      <p class="section-num mb-6 animate-fade-up" style="animation-delay:0.05s; opacity:0;">— フリーランスエンジニア / Tokyo</p>
+      <h1 class="font-display font-extrabold leading-none text-ink" style="font-size: clamp(3.5rem, 9vw, 8rem); letter-spacing: -0.03em;">
+        <div class="hero-title-line"><span>Building</span></div>
+        <div class="hero-title-line"><span>Digital</span></div>
+        <div class="hero-title-line"><span class="text-accent">Products.</span></div>
+      </h1>
+    </div>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 reveal">
+      <p class="font-body text-muted text-base max-w-sm leading-relaxed">
+        アプリケーション開発・Webサービス運営を軸に、<br class="hidden md:block"/>アイデアをプロダクトへと昇華します。
+      </p>
+      <a href="#about"
+         class="inline-flex items-center gap-3 bg-ink text-paper font-display font-semibold px-8 py-4 text-sm tracking-widest uppercase hover:bg-accent transition-colors duration-300 w-max">
+        About Me
+        <span class="text-lg">→</span>
+      </a>
+    </div>
+
+    <!-- scroll indicator -->
+    <div class="mt-20 flex items-center gap-3 reveal" style="transition-delay:0.3s">
+      <div class="w-12 h-px bg-ink/30"></div>
+      <span class="font-body text-xs text-muted tracking-widest uppercase">Scroll</span>
+    </div>
+  </section>
+
+  <!-- ========== SERVICES ========== -->
+  <section id="services" class="max-w-6xl mx-auto px-6 py-28">
+    <div class="flex items-start justify-between mb-16 reveal">
+      <div>
+        <p class="section-num mb-3">01 — Services</p>
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-tight">提供サービス</h2>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Card 1 -->
+      <div class="service-card p-10 reveal">
+        <div class="text-5xl mb-6">📱</div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-4">アプリケーション開発</h3>
+        <p class="font-body text-muted text-sm leading-relaxed mb-6">
+          モバイルアプリから、デスクトップアプリまで。ユーザー体験を最優先に、スケーラブルなアーキテクチャで設計・開発します。
+        </p>
+        <ul class="font-body text-xs text-muted space-y-2">
+          <li class="flex items-center gap-2"><span class="text-accent">→</span> モバイルアプリ（iOS / Android）</li>
+          <li class="flex items-center gap-2"><span class="text-accent">→</span> クロスプラットフォーム開発</li>
+          <li class="flex items-center gap-2"><span class="text-accent">→</span> バックエンド・API設計</li>
+          <li class="flex items-center gap-2"><span class="text-accent">→</span> 保守・運用サポート</li>
+        </ul>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="service-card p-10 reveal" style="transition-delay: 0.15s">
+        <div class="text-5xl mb-6">🌐</div>
+        <h3 class="font-display font-bold text-2xl text-ink mb-4">Webサービス運営</h3>
+        <p class="font-body text-muted text-sm leading-relaxed mb-6">
+          企画・設計から開発・グロースまで一気通貫で対応。Webサービスを運営しており、立ち上げから運営までの知見を持ちます。
+        </p>
+        <ul class="font-body text-xs text-muted space-y-2">
+          <li class="flex items-center gap-2"><span class="text-accent">→</span> Webアプリケーション開発</li>
+          <li class="flex items-center gap-2"><span class="text-accent">→</span> 既存サービスの改善・リファクタリング</li>
+          <li class="flex items-center gap-2"><span class="text-accent">→</span> グロース施策・分析</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about" class="max-w-6xl mx-auto px-6 py-28">
+    <div class="grid md:grid-cols-2 gap-16 items-start">
+      <div class="reveal">
+        <p class="section-num mb-3">02 — About</p>
+        <h2 class="font-display font-bold text-4xl md:text-5xl text-ink leading-tight mb-8">About Me</h2>
+        <p class="font-body text-muted text-sm leading-loose mb-6">
+          フリーランスエンジニアとして、スタートアップから中規模企業まで幅広くご支援しています。モバイルアプリの開発・リリースから、Webサービスの設計・グロースまで一貫して対応可能です。
+        </p>
+        <p class="font-body text-muted text-sm leading-loose">
+          「作って終わり」ではなく、サービスが育っていく過程に伴走することを大切にしています。納品後の保守・改善提案も含め、長期的なパートナーとしてお付き合いできます。
+        </p>
+      </div>
+
+      <div class="reveal" style="transition-delay:0.15s">
+        <div class="space-y-8">
+          <div>
+            <p class="section-num mb-4">Skills</p>
+            <div class="flex flex-wrap gap-2">
+              <template id="skill-list">
+              </template>
+            </div>
+            <div class="flex flex-wrap gap-2" id="skills-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="bg-ink border-t border-paper/10 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+      <span class="font-display font-bold text-paper text-sm">Shoya Toyama</span>
+      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8">
+        <a href="tokushoho.html" class="font-body text-xs text-paper/40 hover:text-accent transition-colors duration-200 underline underline-offset-2">特定商取引法に基づく表記</a>
+        <p class="font-body text-xs text-paper/30">© 2026 Shoya Toyama — All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Skills
+    const skills = ['AWS', 'Go', 'TypeScript', 'React', 'Next.js', 'Vue', 'Node.js', 'PostgreSQL', 'MySQL'];
+    const container = document.getElementById('skills-container');
+    skills.forEach(skill => {
+      const tag = document.createElement('span');
+      tag.className = 'font-body text-xs border border-ink/20 text-muted px-3 py-1';
+      tag.textContent = skill;
+      container.appendChild(tag);
+    });
+
+    // Intersection Observer for reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
